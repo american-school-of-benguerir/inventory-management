@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.dark-bg
+{
+    --tw-bg-opacity: 1;
+    background-color: rgb(100, 116, 139 / var(--tw-bg-opacity)) /* #ffffff */;
+}
