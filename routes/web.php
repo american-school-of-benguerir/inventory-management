@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TypeController;
 
 Route::get('/', function () {
     return view('components.home');
@@ -18,6 +19,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/picture', [ProfileController::class, 'updateProfilePicture'])->name('profile.picture.update');
+
+    Route::resource('types', TypeController::class)->names([
+        'index'   => 'types.index',
+        'create'  => 'types.create',
+        'store'   => 'types.store',
+        'show'    => 'types.show',
+        'edit'    => 'types.edit',
+        'update'  => 'types.update',
+        'destroy' => 'types.destroy',
+    ]);
 
 });
 require __DIR__.'/auth.php';

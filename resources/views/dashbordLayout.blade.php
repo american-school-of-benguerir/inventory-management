@@ -102,7 +102,7 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link gap-3 py-2.5 my-1 text-base  flex items-center relative rounded-md  w-full {{ Request::is('dashboard') ? 'active' : '' }}""
                                     href="{{ route('dashboard') }}">
-                                    <i class="fa-solid fa-border-all ps-2  text-2xl"></i> <span>Dashboard</span>
+                                    <i class="fa-solid fa-border-all pstypes-2  text-2xl"></i> <span>Dashboard</span>
                                 </a>
                             </li>
 
@@ -112,15 +112,21 @@
                             </li>
 
                             <li class="sidebar-item">
-                                <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md  w-full {{ Request::is('devices') ? 'active' : '' }}"
+                                <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md  w-full {{ Request::is('types') ? 'active' : '' }}"
+                                    href="{{ route('types.index') }}">
+                                    <i class="fa-solid fa-laptop-file ps-2 text-2xl"></i> <span>Types</span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-item">
+                                <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md  w-full {{ Request::is('dashboard') ? 'active' : '' }}"
                                     href="">
-                                    <i class="fa-solid fa-file-invoice ps-2 text-2xl"></i> <span>Devices</span>
+                                    <i class="fa-solid fa-desktop ps-2 text-2xl"></i> <span>Devices</span>
                                 </a>
                             </li>
                         </ul>
                     </nav>
                 </div>
-
                 <!-- </aside> -->
             </aside>
             <div class=" w-full page-wrapper xl:px-6 px-0">
