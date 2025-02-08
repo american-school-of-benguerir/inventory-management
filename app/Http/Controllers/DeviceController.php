@@ -11,7 +11,8 @@ class DeviceController extends Controller
     public function index()
     {
         $devices = Device::all();
-        return view('components.devices.index', compact('devices'));
+        $types = Type::all();
+        return view('components.devices.index', compact('devices', 'types'));
     }
 
     // Show the form for editing the specified device
