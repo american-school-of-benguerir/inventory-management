@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TypeController;
+use App\Http\Controllers\DeviceController;
 
 Route::get('/', function () {
     return view('components.home');
@@ -29,6 +30,14 @@ Route::middleware('auth')->group(function () {
         'update'  => 'types.update',
         'destroy' => 'types.destroy',
     ]);
-
+    Route::resource('devices', DeviceController::class)->names([
+        'index'   => 'devices.index',
+        'create'  => 'devices.create',
+        'store'   => 'devices.store',
+        'show'    => 'devices.show',
+        'edit'    => 'devices.edit',
+        'update'  => 'devices.update',
+        'destroy' => 'devices.destroy',
+    ]);
 });
 require __DIR__.'/auth.php';

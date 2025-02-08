@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id')->constrained('types')->onDelete('set null')->nullable();
+            $table->unsignedBigInteger('type_id')->nullable();
             $table->string('os')->default('N/A');
             $table->string('os_version')->default('N/A');
             $table->string('serial_number')->unique();
@@ -23,16 +23,30 @@ return new class extends Migration
             $table->string('disk_spaces')->default('N/A');
             $table->string('model')->default('N/A');
             $table->string('make')->default('N/A');
-            $table->foreignId('assignee_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->unsignedBigInteger('assignee_id')->nullable();
             $table->string('switch')->default('N/A');
             $table->string('port')->default('N/A');
-            $table->text('notes')->nullable();
-            $table->foreignId('last_updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->unsignedBigInteger('last_updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
-        });
-    }
 
+            // Add foreign key constraints after all columns are defined
+            $table->foreign('type_id')
+                ->references('id')
+                ->on('types')
+                ->onDelete('set null');
+
+            $table->foreign('assignee_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('set null');
+
+            $table->foreign('last_updated_by')
+                ->references('id')
+                ->on('users')
+                ->onDelete('set null');
+    });
+    }
     /**
      * Reverse the migrations.
      */
