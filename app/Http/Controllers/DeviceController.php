@@ -23,13 +23,15 @@ class DeviceController extends Controller
         $device = Device::findOrFail($id);
         $types = Type::all(); // For selecting the device type in the form
         $users = User::all(); // For selecting the assignee in the form
-        return view('components.devices.edit', compact('device', 'types'));
+        return view('components.devices.edit', compact('device', 'types', 'users'));
     }
     // show a single device with all its details
     public function show($id)
     {
         $device = Device::findOrFail($id);
-        return view('components.devices.show', compact('device'));
+        $users = User::all();
+        $types = Type::all();
+        return view('components.devices.show', compact('device', 'users', 'types'));
     }
     // Update the specified device in storage
     public function update(Request $request, $id)

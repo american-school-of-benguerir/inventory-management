@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('type_id')->nullable();
             $table->string('os')->default('N/A');
+            $table->string('device_name')->nullable();
             $table->string('os_version')->default('N/A');
             $table->string('serial_number')->nullable();
             $table->string('mac_address')->nullable();

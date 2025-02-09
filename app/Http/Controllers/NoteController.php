@@ -11,19 +11,16 @@ class NoteController extends Controller
     // Show all notes
     public function index()
     {
-        $notes = Note::with(['device', 'user'])->get(); // Eager loading device and user relationships
-
+        $notes = Note::with(['device', 'user'])->get();
         return view('notes.index', compact('notes'));
     }
 
-    // Show the form to create a new note
     public function create()
     {
-        $devices = Device::all(); // Assuming Device model exists
+        $devices = Device::all();
         return view('notes.create', compact('devices'));
     }
 
-    // Store a new note
     public function store(Request $request)
     {
         $request->validate([
@@ -34,17 +31,16 @@ class NoteController extends Controller
         Note::create([
             'note' => $request->note,
             'device_id' => $request->device_id,
-            'created_by' => auth()->id(), // User who is logged in
+            'created_by' => auth()->id(),
         ]);
 
         return redirect()->route('notes.index')->with('success', 'Note created successfully!');
     }
 
-    // Show the form to edit a note
     public function edit($id)
     {
         $note = Note::findOrFail($id);
-        $devices = Device::all(); // All devices
+        $devices = Device::all();
         return view('notes.edit', compact('note', 'devices'));
     }
 

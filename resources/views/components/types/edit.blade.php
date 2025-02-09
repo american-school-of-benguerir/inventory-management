@@ -1,7 +1,7 @@
 @extends('dashbordLayout')
 
 @section('content')
-<div class="card dark:bg-[#262F3F]">
+<div class="card bg-[#ebe7e4] dark:bg-[#262F3F]">
     <div class="card-body">
         <h6 class="text-lg font-semibold mb-6">Edit Type Entry</h6>
 

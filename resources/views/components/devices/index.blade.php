@@ -18,6 +18,7 @@
         <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
             <thead class="bg-[#e4ebeb] dark:bg-gray-700 rounded">
                 <tr>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Name</th>
                     <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Serial Number</th>
                     <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Type</th>
                     <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Make</th>
@@ -31,6 +32,7 @@
                 @foreach($devices as $device)
 
                 <tr>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->device_name }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->serial_number }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->type->name }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->make }}</td>
@@ -121,6 +123,11 @@
 
                 <!-- Second Column: Fields 8 to 14 -->
                 <div>
+                    <!-- Device Name Field -->
+                    <div class="mb-4">
+                        <label for="device_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Device Name</label>
+                        <input type="text" id="device_name" name="device_name" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
+                    </div>
                     <!-- Model Field -->
                     <div class="mb-4">
                         <label for="model" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model</label>
