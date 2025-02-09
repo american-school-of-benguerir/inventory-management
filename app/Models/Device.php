@@ -10,20 +10,9 @@ class Device extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type_id',
-        'os',
-        'os_version',
-        'serial_number',
-        'mac_address',
-        'ram',
-        'processor',
-        'disk_spaces',
-        'model',
-        'make',
-        'assignee_id',
-        'switch',
-        'port',
-        'last_updated_by',
+        'type_id', 'os', 'os_version', 'serial_number', 'mac_address',
+        'ram', 'processor', 'disk_spaces', 'model', 'make',
+        'assignee_id', 'switch', 'port', 'last_updated_by'
     ];
 
     // Relationship with the Type model

@@ -2,7 +2,7 @@
 @extends('welcome')
 
 @section('content')
-<div class="flex items-center justify-center min-h-[calc(100vh-80px)]"> <!-- Adjusted to account for the navbar -->
+<div class="flex items-center justify-center min-h-[calc(85vh-80px)]"> <!-- Adjusted to account for the navbar -->
     <div class="bg-[#ebe7e4] dark:bg-[#262F3F] p-10 rounded-lg shadow-lg max-w-lg w-full">
         <h2 class="text-4xl font-bold text-center text-gray-900 dark:text-white mb-6">Welcome Back!</h2>
 
