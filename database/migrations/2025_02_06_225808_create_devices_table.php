@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('type_id')->nullable();
             $table->string('os')->default('N/A');
             $table->string('os_version')->default('N/A');
-            $table->string('serial_number')->nullable()->unique();
-            $table->string('mac_address')->nullable()->unique();
+            $table->string('serial_number')->nullable();
+            $table->string('mac_address')->nullable();
             $table->string('ram')->default('N/A');
             $table->string('processor')->default('N/A');
             $table->string('disk_spaces')->default('N/A');

@@ -6,12 +6,11 @@
         <h6 class="text-lg font-semibold mb-6">Welcome {{ auth()->user()->name }}</h6>
 
         <div class="grid grid-cols-2 gap-4">
-            <!-- Freezer Temp (Highest) Card -->
             <div class="card bg-[#FCF8F3] dark:bg-gray-700  shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-lg font-semibold">Highest Freezer Temp Today</h6>
-                    <p class="text-3xl font-bold text-green-500">
-                        1 °C
+                    <h6 class="text-lg font-semibold">number of devices</h6>
+                    <p class="text-3xl font-bold">
+                        {{ $devices }}
                     </p>
                 </div>
             </div>
@@ -19,15 +18,15 @@
             <!-- Freezer Temp (Lowest) Card -->
             <div class="card bg-[#FCF8F3] dark:bg-gray-700  shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-lg font-semibold">Lowest Freezer Temp Today</h6>
-                    <p class="text-3xl font-bold text-green-500">
-                        7°C
+                    <h6 class="text-lg font-semibold">number of types</h6>
+                    <p class="text-3xl font-bold">
+                        {{ $types }}
                     </p>
                 </div>
             </div>
             <div class="card bg-customBeige dark:bg-gray-700  shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-lg font-semibold">Total Expenses number</h6>
+                    <h6 class="text-lg font-semibold">Pending tasks</h6>
                     <p class="text-3xl font-bold">1</p>
                 </div>
             </div>
@@ -35,15 +34,15 @@
             <!-- Pending Tasks Card -->
             <div class="card bg-[#FCF8F3] dark:bg-gray-700  shadow-sm">
                 <div class="card-body">
-                    <h6 class="text-lg font-semibold">Total expense</h6>
-                    <p class="text-3xl font-bold">1 MAD</p>
+                    <h6 class="text-lg font-semibold">unassigned devices</h6>
+                    <p class="text-3xl font-bold">1</p>
                 </div>
             </div>
             <!-- Total Users Card -->
             <div class="card bg-customBeige dark:bg-gray-700  shadow-sm">
                 <div class="card-body">
                     <h6 class="text-lg font-semibold">Total Users</h6>
-                    <p class="text-3xl font-bold">1</p>
+                    <p class="text-3xl font-bold">{{ $users }}</p>
                 </div>
             </div>
 

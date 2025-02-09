@@ -34,7 +34,7 @@
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->serial_number }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->type->name }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->make }}</td>
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->assignee->name }}</td>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->assignee->name ?? 'Unassigned' }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->switch }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->port }}</td>
                     <td class="py-2 px-4">

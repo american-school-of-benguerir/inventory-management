@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\NoteController;
 
 Route::get('/', function () {
     return view('components.home');
@@ -38,6 +39,15 @@ Route::middleware('auth')->group(function () {
         'edit'    => 'devices.edit',
         'update'  => 'devices.update',
         'destroy' => 'devices.destroy',
+    ]);
+    Route::apiResource('notes', NoteController::class)->names([
+        'index'   => 'notes.index',
+        'create'  => 'notes.create',
+        'store'   => 'notes.store',
+        'show'    => 'notes.show',
+        'edit'    => 'notes.edit',
+        'update'  => 'notes.update',
+        'destroy' => 'notes.destroy',
     ]);
 });
 require __DIR__.'/auth.php';
