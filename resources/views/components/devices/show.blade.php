@@ -98,7 +98,7 @@
 <div class="card bg-[#ebe7e4] dark:bg-[#262F3F] shadow-lg rounded-lg">
     <div class="card-body p-6">
         <div class="flex justify-between items-center mb-6">
-            <h6 class="text-lg font-semibold mb-6">Device's note</h6>
+            <h6 class="text-lg font-semibold mb-6">Device's notes</h6>
             <button id="openModalButton" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
                 <i class="fas fa-plus"></i> Add New Note
             </button>

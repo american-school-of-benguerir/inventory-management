@@ -124,6 +124,20 @@
                                     <i class="fa-solid fa-desktop ps-2 text-2xl"></i> <span>Devices</span>
                                 </a>
                             </li>
+                            <!-- Accessories -->
+                            <li class="sidebar-item">
+                                <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md  w-full {{ Request::is('accessories') ? 'active' : '' }}"
+                                    href="{{ route('accessories.index') }}">
+                                    <i class="fa-solid fa-headphones ps-2 text-2xl"></i> <span>Accessories</span>
+                                </a>
+                            </li>
+                            <!-- credentils -->
+                            <li class="sidebar-item">
+                                <a class="sidebar-link gap-3 py-2.5 my-1 text-base   flex items-center relative  rounded-md  w-full {{ Request::is('credentials') ? 'active' : '' }}"
+                                    href="{{ route('devices.index') }}">
+                                    <i class="fa-solid fa-key ps-2 text-2xl"></i> <span>Credentials</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>

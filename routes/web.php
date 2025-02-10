@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\AccessoryController;
 
 Route::get('/', function () {
     return view('components.home');
@@ -48,6 +49,15 @@ Route::middleware('auth')->group(function () {
         'edit'    => 'notes.edit',
         'update'  => 'notes.update',
         'destroy' => 'notes.destroy',
+    ]);
+    Route::resource('accessories', AccessoryController::class)->names([
+        'index'   => 'accessories.index',
+        'create'  => 'accessories.create',
+        'store'   => 'accessories.store',
+        'show'    => 'accessories.show',
+        'edit'    => 'accessories.edit',
+        'update'  => 'accessories.update',
+        'destroy' => 'accessories.destroy',
     ]);
 });
 require __DIR__.'/auth.php';
