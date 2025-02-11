@@ -12,7 +12,7 @@ class Device extends Model
     protected $fillable = [
         'type_id', 'device_name' ,'os', 'os_version', 'serial_number', 'mac_address',
         'ram', 'processor', 'disk_spaces', 'model', 'make',
-        'assignee_id', 'switch', 'port', 'last_updated_by'
+        'assignee_id', 'switch', 'port', 'last_updated_by', 'is_defective'
     ];
 
     // Relationship with the Type model

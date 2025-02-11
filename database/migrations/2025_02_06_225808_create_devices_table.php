@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('switch')->default('N/A');
             $table->string('port')->default('N/A');
             $table->unsignedBigInteger('last_updated_by')->nullable();
+            // is the device defective
+            $table->boolean('is_defective')->default(false);
             $table->softDeletes();
             $table->timestamps();
 
@@ -47,7 +49,7 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('set null');
     });
-    
+
     }
     /**
      * Reverse the migrations.

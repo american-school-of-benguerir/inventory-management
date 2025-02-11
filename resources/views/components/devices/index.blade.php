@@ -10,7 +10,15 @@
                 <i class="fas fa-plus"></i> Add New Device
             </button>
         </div>
-
+        <div class="flex justify-between items-center mb-6">
+            <form method="GET" action="{{ route('devices.index') }}" class="flex items-center">
+                <div class="mr-2">
+                    <label for="search" class="text-sm font-medium text-gray-700 dark:text-gray-300">Search by name or Serial :</label>
+                    <input type="text" name="search" value="{{ old('search', $query) }}" placeholder="Search" class="px-3 py-2 rounded-md bg-gray-50 dark:bg-gray-700">
+                </div>
+                <button type="submit" class="px-4 py-2 rounded bg-[#6ca296] dark:bg-[#8576ff] text-white  hover:bg-[#4b776d] dark:hover:bg-[#423B7F]"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        </div>
         @if ($devices->isEmpty())
             <p class="text-sm text-gray-600 dark:text-gray-300">No devices available.</p>
         @else
@@ -58,6 +66,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-4">
+            {{ $devices->links() }}
+        </div>
         @endif
     </div>
 </div>

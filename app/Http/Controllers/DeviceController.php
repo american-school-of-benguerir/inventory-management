@@ -9,12 +9,20 @@ use Illuminate\Http\Request;
 class DeviceController extends Controller
 {
     // Display a listing of devices
-    public function index()
+    public function index(Request $request)
     {
-        $devices = Device::with(['type', 'assignee', 'lastUpdatedBy'])->get();
+        $query = $request->input('search');
+
+        $devices = Device::with(['type', 'assignee', 'lastUpdatedBy'])
+                         ->where('device_name', 'like', '%' . $query . '%')  // Search by device name
+                         ->orWhere('serial_number', 'like', '%' . $query . '%')  // Search by serial number
+                         ->latest()
+                         ->paginate(10);
+
         $types = Type::all();
         $users = User::all();
-        return view('components.devices.index', compact('devices', 'types', 'users'));
+
+        return view('components.devices.index', compact('devices', 'types', 'users', 'query'));
     }
 
     // Show the form for editing the specified device
@@ -71,7 +79,9 @@ class DeviceController extends Controller
             'serial_number' => 'required|unique:devices,serial_number',
             // Add validation for other fields as needed
         ]);
-
+        // add the last_updated_by field to the request
+        $values['last_updated_by'] = auth()->id();
+        $values['is_defective'] = false;
         $device = Device::create($values);
 
         return redirect()->route('devices.index')->with('success', 'Device created successfully!');
