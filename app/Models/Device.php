@@ -32,4 +32,8 @@ class Device extends Model
     {
         return $this->belongsTo(User::class, 'last_updated_by');
     }
+    public function credentials()
+    {
+        return $this->belongsToMany(Credential::class, 'device_credential', 'device_id', 'credential_id');
+    }
 }

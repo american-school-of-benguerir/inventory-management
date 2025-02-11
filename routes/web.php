@@ -7,6 +7,7 @@ use App\Http\Controllers\TypeController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\AccessoryController;
+use App\Http\Controllers\CredentialController;
 
 Route::get('/', function () {
     return view('components.home');
@@ -59,5 +60,16 @@ Route::middleware('auth')->group(function () {
         'update'  => 'accessories.update',
         'destroy' => 'accessories.destroy',
     ]);
+
+    Route::resource('credentials', CredentialController::class)->names([
+        'index'   => 'credentials.index',
+        'create'  => 'credentials.create',
+        'store'   => 'credentials.store',
+        'show'    => 'credentials.show',
+        'edit'    => 'credentials.edit',
+        'update'  => 'credentials.update',
+        'destroy' => 'credentials.destroy',
+    ]);
+
 });
 require __DIR__.'/auth.php';

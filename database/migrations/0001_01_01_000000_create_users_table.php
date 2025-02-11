@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // if its a user or room
+            $table->string('type')->enom(['staff', 'student' , 'room']);
+            // if user account is active
+            $table->boolean('active')->default(true);
+            // if user account is admin or super admin or a normal user
+            $table->string('role')->enom(['user', 'admin', 'super-admin']);
             $table->rememberToken();
             $table->timestamps();
         });

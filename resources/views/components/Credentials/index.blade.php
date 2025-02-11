@@ -1,49 +1,53 @@
 @extends('dashbordLayout')
 
 @section('content')
-<!-- Devices Management Card -->
+<!-- Credentials Management Card -->
 <div class="card bg-[#ebe7e4] dark:bg-[#262F3F]">
     <div class="card-body">
         <div class="flex justify-between items-center mb-6">
-            <h6 class="text-lg font-semibold mb-6">Manage accessories</h6>
+            <h6 class="text-lg font-semibold mb-6">Manage Credentials</h6>
             <button id="openModalButton" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
-                <i class="fas fa-plus"></i> Add New Device
+                <i class="fas fa-plus"></i> Add New Credential
             </button>
         </div>
 
-        @if ($accessories->isEmpty())
-            <p class="text-sm text-gray-600 dark:text-gray-300">No accessories available.</p>
+        @if ($credentials->isEmpty())
+            <p class="text-sm text-gray-600 dark:text-gray-300">No credentials available.</p>
         @else
-        <!-- Devices Table -->
+        <!-- Credentials Table -->
         <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
             <thead class="bg-[#e4ebeb] dark:bg-gray-700 rounded">
                 <tr>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Name</th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Type</th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Quantity</th>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Actions</th>
+                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Email</th>
+                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Password</th>
+                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Type</th>
+                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($accessories as $accessory)
-                <tr>
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $accessory->name }}</td>
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $accessory->type }}</td>
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $accessory->quantity }}</td>
+                @foreach($credentials as $credential)
+                    <tr>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->email }}</td>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->password }}</td> <!-- This will show the decrypted password -->
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->type }}</td>
                     <td class="py-2 px-4">
-                        <a href="{{ route('accessories.edit', $accessory->id) }}" class="text-green-500 hover:text-green-700 ml-4">
+                        <a href="{{ route('credentials.show', $credential->id) }}" class="text-blue-500 hover:text-blue-700">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                        <a href="{{ route('credentials.edit', $credential->id) }}" class="text-green-500 hover:text-green-700 ml-4">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <button class="delete-button text-red-500 hover:text-red-700 ml-4" data-id="{{ $accessory->id }}">
+                        <button class="delete-button text-red-500 hover:text-red-700 ml-4" data-id="{{ $credential->id }}">
                             <i class="fas fa-trash"></i>
                         </button>
-                        <form id="delete-form-{{ $accessory->id }}" action="{{ route('accessories.destroy', $accessory->id) }}" method="POST" class="hidden">
+                        <form id="delete-form-{{ $credential->id }}" action="{{ route('credentials.destroy', $credential->id) }}" method="POST" class="hidden">
                             @csrf
                             @method('DELETE')
                         </form>
                     </td>
                 </tr>
                 @endforeach
+
             </tbody>
         </table>
         @endif
@@ -53,34 +57,33 @@
 <!-- Modal Overlay -->
 <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[1001]"></div>
 
-<!-- Modal for adding new Device -->
+<!-- Modal for adding new Credential -->
 <div id="addEntryModal" class="fixed inset-0 flex items-center justify-center hidden z-[1002]">
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-[90%] max-w-md">
         <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold">Add New accessories</h3>
+            <h3 class="text-lg font-semibold">Add New Credential</h3>
             <button id="closeModalButton" class="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100">&times;</button>
         </div>
-        <form action="{{ route('accessories.store') }}" method="POST">
+        <form action="{{ route('credentials.store') }}" method="POST">
             @csrf
-            <!-- Device Name -->
             <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
-                <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" placeholder="Enter device name">
+                <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Email</label>
+                <input type="email" name="email" id="email" class="w-full p-2 mt-2 bg-[#ebe7e4] dark:bg-gray-700 rounded" required>
             </div>
-            <!-- Device Type -->
+
             <div class="mb-4">
-                <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Type</label>
-                <input type="text" id="type" name="type" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" placeholder="Enter device type">
+                <label for="password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Password</label>
+                <input type="password" name="password" id="password" class="w-full p-2 mt-2 bg-[#ebe7e4] dark:bg-gray-700 rounded" required>
             </div>
-            <!-- Device Quantity -->
+
             <div class="mb-4">
-                <label for="quantity" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Quantity</label>
-                <input type="number" id="quantity" name="quantity" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" placeholder="Enter device quantity">
+                <label for="type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Type</label>
+                <input type="text" name="type" id="type" class="w-full p-2 mt-2 bg-[#ebe7e4] dark:bg-gray-700 rounded" required>
             </div>
 
             <!-- Submit Button -->
             <div class="flex justify-end mt-4">
-                <button type="submit" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">Add Device</button>
+                <button type="submit" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">Add Credential</button>
             </div>
         </form>
     </div>
