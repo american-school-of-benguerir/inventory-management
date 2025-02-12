@@ -18,10 +18,10 @@
         <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
             <thead class="bg-[#e4ebeb] dark:bg-gray-700 rounded">
                 <tr>
-                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Email</th>
-                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Password</th>
-                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Type</th>
-                    <th class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">Actions</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Email</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Password</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Type</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Actions</th>
                 </tr>
             </thead>
             <tbody>
