@@ -24,14 +24,6 @@
                 <input id="email" type="email" name="email" value="{{ old('email') }}" required
                     class="w-full mt-2 px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-sm focus:ring-[#6ca296] dark:focus:ring-[#8576ff] focus:border-[#6ca296] dark:focus:border-[#8576ff] transition duration-150 ease-in-out">
             </div>
-
-            <!-- Invite Code -->
-            <div class="mb-6">
-                <label for="invite_code" class="block text-sm font-medium text-gray-800 dark:text-gray-200">Invite Code</label>
-                <input id="invite_code" type="text" name="invite_code" value="{{ old('invite_code') }}" required
-                    class="w-full mt-2 px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-sm focus:ring-[#6ca296] dark:focus:ring-[#8576ff] focus:border-[#6ca296] dark:focus:border-[#8576ff] transition duration-150 ease-in-out">
-            </div>
-
             <!-- Password -->
             <div class="mb-6">
                 <label for="password" class="block text-sm font-medium text-gray-800 dark:text-gray-200">Password</label>

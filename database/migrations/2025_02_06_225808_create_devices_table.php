@@ -16,13 +16,14 @@ return new class extends Migration
             $table->unsignedBigInteger('type_id')->nullable();
             $table->string('os')->default('N/A');
             $table->string('device_name')->nullable();
+            $table->string('model_name')->default('N/A');
+            $table->string('model_number')->nullable();
             $table->string('os_version')->default('N/A');
             $table->string('serial_number')->nullable();
             $table->string('mac_address')->nullable();
             $table->string('ram')->default('N/A');
             $table->string('processor')->default('N/A');
             $table->string('disk_spaces')->default('N/A');
-            $table->string('model')->default('N/A');
             $table->string('make')->default('N/A');
             $table->unsignedBigInteger('assignee_id')->nullable();
             $table->string('switch')->default('N/A');

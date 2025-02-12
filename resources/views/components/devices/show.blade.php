@@ -46,6 +46,11 @@
                     <label for="disk_spaces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Disk Spaces</label>
                     <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->disk_spaces }}</p>
                 </div>
+                <!-- is device diffective -->
+                <div class="mb-6  border-gray-300 dark:border-gray-600 pb-4">
+                    <label for="disk_spaces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Device Diffective</label>
+                    <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->is_diffective ? 'Yes' : 'No' }}</p>
+                </div>
             </div>
 
             <!-- Additional Information Section -->
@@ -55,10 +60,13 @@
                     <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->type->name }}</p>
                 </div>
                 <div class="mb-6 border-b border-gray-300 dark:border-gray-600 pb-4">
-                    <label for="model" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model</label>
-                    <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->model }}</p>
+                    <label for="model" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model name</label>
+                    <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->model_name }}</p>
                 </div>
-
+                <div class="mb-6 border-b border-gray-300 dark:border-gray-600 pb-4">
+                    <label for="location" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model number</label>
+                    <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->model_number }}</p>
+                </div>
                 <div class="mb-6 border-b border-gray-300 dark:border-gray-600 pb-4">
                     <label for="make" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Make</label>
                     <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->make }}</p>

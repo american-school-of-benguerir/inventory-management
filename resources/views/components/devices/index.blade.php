@@ -130,7 +130,13 @@
                         <label for="disk_spaces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Disk Spaces</label>
                         <input type="text" id="disk_spaces" name="disk_spaces" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
                     </div>
+                    <!-- is device diffective Field -->
+                    <div class="mb-4">
+                        <label for="is_diffective" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Diffective</label>
+                        <input type="checkbox" id="is_diffective" name="is_diffective" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
+                    </div>
                 </div>
+
 
                 <!-- Second Column: Fields 8 to 14 -->
                 <div>
@@ -141,10 +147,14 @@
                     </div>
                     <!-- Model Field -->
                     <div class="mb-4">
-                        <label for="model" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model</label>
-                        <input type="text" id="model" name="model" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
+                        <label for="model_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model name</label>
+                        <input type="text" id="model" name="model_name" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
                     </div>
-
+                   <!-- model nuber field -->
+                    <div class="mb-4">
+                        <label for="model_number" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model Number</label>
+                        <input type="text" id="model_number" name="model_number" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
+                    </div>
                     <!-- Make Field -->
                     <div class="mb-4">
                         <label for="make" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Make</label>

@@ -16,6 +16,7 @@ class DeviceController extends Controller
         $devices = Device::with(['type', 'assignee', 'lastUpdatedBy'])
                          ->where('device_name', 'like', '%' . $query . '%')  // Search by device name
                          ->orWhere('serial_number', 'like', '%' . $query . '%')  // Search by serial number
+                         ->orWhere('mac_address', 'like', '%' . $query . '%')  // Search by mac address
                          ->latest()
                          ->paginate(10);
 
