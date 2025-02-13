@@ -70,6 +70,15 @@ Route::middleware('auth')->group(function () {
         'update'  => 'credentials.update',
         'destroy' => 'credentials.destroy',
     ]);
+    Route::resource('users', UserController::class)->names([
+        'index'   => 'users.index',
+        'create'  => 'users.create',
+        'store'   => 'users.store',
+        'show'    => 'users.show',
+        'edit'    => 'users.edit',
+        'update'  => 'users.update',
+        'destroy' => 'users.destroy',
+    ]);
 
 });
 require __DIR__.'/auth.php';
