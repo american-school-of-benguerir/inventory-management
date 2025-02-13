@@ -28,7 +28,14 @@
                 @foreach($credentials as $credential)
                     <tr>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->email }}</td>
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->password }}</td> <!-- This will show the decrypted password -->
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">
+                        <div class="relative">
+                            <input type="password" id="password-field" value="{{ $credential->password }}" class="block  bg-transparent text-sm text-gray-700 dark:text-gray-300 rounded-md px-3 py-2" readonly>
+                            <button type="button" class="absolute right-2 top-2 text-gray-500 dark:text-gray-300" id="toggle-password">
+                              <i class="fas fa-eye"></i>
+                            </button>
+                          </div>
+                      </td> <!-- This will show the decrypted password -->
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->type }}</td>
                     <td class="py-2 px-4">
                         <a href="{{ route('credentials.show', $credential->id) }}" class="text-blue-500 hover:text-blue-700">
@@ -106,7 +113,22 @@
         document.getElementById('addEntryModal').classList.add('hidden');
     });
 </script>
+<script>
+    document.getElementById('toggle-password').addEventListener('click', function() {
+      const passwordField = document.getElementById('password-field');
+      const icon = this.querySelector('i');
 
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passwordField.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+  </script>
 <!-- SweetAlert2 for Delete Confirmation -->
 <script>
     document.querySelectorAll('.delete-button').forEach(function(button) {
