@@ -82,7 +82,6 @@ class DeviceController extends Controller
         ]);
         // add the last_updated_by field to the request
         $values['last_updated_by'] = auth()->id();
-        $values['is_defective'] = false;
         $device = Device::create($values);
 
         return redirect()->route('devices.index')->with('success', 'Device created successfully!');
