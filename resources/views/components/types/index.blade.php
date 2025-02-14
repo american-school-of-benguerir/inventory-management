@@ -42,6 +42,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-4">
+            {{ $types->links() }}
+        </div>
         @endif
     </div>
 </div>

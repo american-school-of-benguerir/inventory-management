@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
         // settting the type of the user to be 'user'
-        $request->merge(['type' => 'user']);
+        $request->merge(['type' => 'staff']);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

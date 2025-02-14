@@ -10,7 +10,8 @@ class AccessoryController extends Controller
     // Display a listing of accessories
     public function index()
     {
-        $accessories = Accessory::all();
+        // get all accessories and paginate them  to 10 per page
+        $accessories = Accessory::paginate(10);
         return view('components.accessories.index', compact('accessories'));
     }
 

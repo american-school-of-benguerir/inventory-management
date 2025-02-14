@@ -8,6 +8,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\CredentialController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('components.home');
