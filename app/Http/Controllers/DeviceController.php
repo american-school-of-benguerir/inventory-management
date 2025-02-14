@@ -26,6 +26,21 @@ class DeviceController extends Controller
         return view('components.devices.index', compact('devices', 'types', 'users', 'query'));
     }
 
+    public function unassigned(Request $request)
+    {
+        $query = $request->input('search');
+
+        $devices = Device::with(['type', 'assignee', 'lastUpdatedBy'])
+                        ->where('device_name', 'like', '%' . $query . '%')  // Search by device name
+                        ->orWhere('serial_number', 'like', '%' . $query . '%')  // Search by serial number
+                        ->orWhere('mac_address', 'like', '%' . $query . '%')  // Search by mac address
+                        ->whereNull('assignee_id')  // Get only unassigned devices
+                        ->latest()
+                        ->paginate(10);
+
+        return view('components.devices.unassigned', compact('devices', 'query'));
+    }
+
     // Show the form for editing the specified device
     public function edit($id)
     {
@@ -50,7 +65,10 @@ class DeviceController extends Controller
             'serial_number' => 'required|unique:devices,serial_number,' . $id,
             // Add validation for other fields as needed
         ]);
-
+        // if assignee_id is 0 set it to null
+        if ($request->assignee_id == 0) {
+            $request->merge(['assignee_id' => null]);
+        }
         $device = Device::findOrFail($id);
         // get the curent user and add it to the request in the last_updated_by field
         $request->merge(['last_updated_by' => auth()->id()]);

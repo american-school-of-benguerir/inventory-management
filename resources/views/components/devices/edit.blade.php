@@ -81,6 +81,7 @@
                         <label for="assignee_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Assignee</label>
                         <select id="assignee_id" name="assignee_id" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             <option value="" selected disabled>Select assignee</option>
+                            <option value="0">Unassigned</option>
                             @foreach($users as $user)
                                 <option value="{{ $user->id }}" {{ $device->assignee_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                             @endforeach

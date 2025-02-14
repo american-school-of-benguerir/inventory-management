@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
         'update'  => 'devices.update',
         'destroy' => 'devices.destroy',
     ]);
+    Route::get('/unassigned', [DeviceController::class, 'unassigned'])->name('devices.unassigned');
+
     Route::apiResource('notes', NoteController::class)->names([
         'index'   => 'notes.index',
         'create'  => 'notes.create',

@@ -16,7 +16,8 @@ class DashboardController extends Controller
         $devices = Device::all()->count();
         $users = User::all()->count();
         $types = Type::all()->count();
-
-        return view('components.dashboard.index' , compact('user', 'devices', 'types', 'users'));
+        // get count of unassigned devices
+        $unassigned = Device::where('assignee_id', null)->count();
+        return view('components.dashboard.index' , compact('user', 'devices', 'types', 'users', 'unassigned'));
     }
 }
