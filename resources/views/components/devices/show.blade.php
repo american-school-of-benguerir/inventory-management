@@ -118,10 +118,41 @@
     <div class="card-body p-6">
         <div class="flex justify-between items-center mb-6">
             <h6 class="text-lg font-semibold mb-6">Device's credeantials</h6>
-            <button id="openModalButton" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
+            <button id="openModalButtonc" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
                 <i class="fas fa-plus"></i> Add credeantials
             </button>
         </div>
+        @if ($device->credentials->isEmpty())
+            <p class="text-sm text-gray-600 dark:text-gray-300">No credentials linked to this device.</p>
+        @else
+            <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
+                <thead class="bg-[#e4ebeb] dark:bg-gray-700 rounded">
+                    <tr>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Email</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Type</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($device->credentials as $credential)
+                        <tr>
+                            <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->email }}</td>
+                            <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->type }}</td>
+                            <td class="py-2 px-4">
+                                <a href="{{ route('credentials.show', $credential->id) }}" class="text-blue-500 hover:text-blue-700 m-1"><i class="fa-solid fa-up-right-from-square"></i></a>
+                                <form action="{{ route('credentials.destroy', $credential->id) }}" method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-700">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
     </div>
 </div>
 
@@ -147,9 +178,52 @@
             <div class="flex justify-end">
                 <button type="submit" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">Add Note</button>
             </div>
+        </form>
+    </div>
+</div>
+<div id="credmodal" class="fixed inset-0 flex items-center justify-center hidden z-[1002]">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">Add New Credantial</h3>
+            <button id="closeModalButtonc" class="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100">&times;</button>
+        </div>
+        <form action="{{ route('device.linkCredential', $device->id) }}" method="POST">
+            @csrf
+            <div class="mb-4">
+                <label for="credential" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Credential</label>
+                <select name="credential_id" id="credential" class="mt-1 block w-full border-gray-300 dark:border-gray-600 focus:border-[#6ca296] dark:focus:border-[#8576ff] focus:ring focus:ring-[#6ca296] dark:focus:ring-[#8576ff] rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-300">
+                    @foreach ($credentials as $credential)
+                        <option value="{{ $credential->id }}">{{ $credential->email }} - {{ $credential->type }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">Link Credential</button>
+            </div>
+        </form>
     </div>
 </div>
 
+<script>
+// Open modal
+    document.getElementById('openModalButtonc').addEventListener('click', function() {
+        document.getElementById('modalOverlay').classList.remove('hidden');
+        document.getElementById('credmodal').classList.remove('hidden');
+    });
+
+    // Close modal
+    document.getElementById('closeModalButtonc').addEventListener('click', function() {
+        document.getElementById('modalOverlay').classList.add('hidden');
+        document.getElementById('credmodal').classList.add('hidden');
+    });
+
+    // Close modal when overlay is clicked
+    document.getElementById('modalOverlay').addEventListener('click', function() {
+        document.getElementById('modalOverlay').classList.add('hidden');
+        document.getElementById('credmodal').classList.add('hidden');
+    });
+</script>
 <script>
     document.getElementById('openModalButton').addEventListener('click', function() {
         document.getElementById('modalOverlay').classList.remove('hidden');

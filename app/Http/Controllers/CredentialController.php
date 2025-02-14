@@ -18,7 +18,13 @@ class CredentialController extends Controller
     {
         return view('credentials.create');
     }
+    // show Credential
 
+    public function show($id)
+    {
+        $credential = Credential::findOrFail($id);
+        return view('components.credentials.show', compact('credential'));
+    }
     public function store(Request $request)
     {
         // $request->validate([

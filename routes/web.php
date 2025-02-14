@@ -82,6 +82,6 @@ Route::middleware('auth')->group(function () {
         'update'  => 'users.update',
         'destroy' => 'users.destroy',
     ]);
-
+    Route::post('/device/{id}/link-credential', [DeviceController::class, 'linkCredentialToDevice'])->name('device.linkCredential');
 });
 require __DIR__.'/auth.php';

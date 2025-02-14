@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Type;
 use App\Models\User;
+use App\Models\Credential;
 use Illuminate\Http\Request;
 
 class DeviceController extends Controller
@@ -55,7 +56,8 @@ class DeviceController extends Controller
         $device = Device::findOrFail($id);
         $users = User::all();
         $types = Type::all();
-        return view('components.devices.show', compact('device', 'users', 'types'));
+        $credentials = Credential::all(); // Fetch all credentials
+        return view('components.devices.show', compact('device', 'users', 'types', 'credentials'));
     }
     // Update the specified device in storage
     public function update(Request $request, $id)
@@ -113,4 +115,22 @@ class DeviceController extends Controller
 
         return redirect()->route('devices.index')->with('success', 'Device deleted successfully!');
     }
+    public function linkCredentialToDevice(Request $request, $deviceId)
+    {
+        $device = Device::find($deviceId);
+        $credential = Credential::find($request->credential_id);
+
+        if ($device && $credential) {
+            // Assuming you have a many-to-many or one-to-many relationship
+            $device->credentials()->attach($credential); // For many-to-many relation
+            // Or, if it's one-to-many, you can just associate:
+            // $device->credential_id = $credential->id;
+            // $device->save();
+
+            return redirect()->route('devices.show', $deviceId)->with('success', 'Credential linked to device successfully!');
+        }
+
+        return redirect()->route('device.show', $deviceId)->with('error', 'Failed to link credential.');
+    }
+
 }
