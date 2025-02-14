@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -69,7 +70,9 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('components.users.show', compact('user'));
+        // get all of the devices that belong to the user
+        $devices = Device::where('assignee_id', $user->id)->get();
+        return view('components.users.show', compact('user', 'devices'));
     }
 
     public function destroy(User $user)

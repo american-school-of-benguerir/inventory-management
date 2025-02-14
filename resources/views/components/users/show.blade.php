@@ -47,4 +47,44 @@
         </div>
     </div>
 </div>
+<!-- listing all of the devices linked to this user -->
+<div class="card bg-[#ebe7e4] dark:bg-[#262F3F] mt-6">
+    <div class="card-body">
+        <h6 class="text-lg font-semibold mb-6">Devices Linked to this User</h6>
+        @if ($devices->isEmpty())
+            <p class="text-sm text-gray-600 dark:text-gray-300">No devices linked to this user.</p>
+        @else
+        <!-- Devices Table -->
+        <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
+            <thead class="bg-[#e4ebeb] dark:bg-gray-700 rounded">
+                <tr>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Name</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Type</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Serial number</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Created At</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Updated At</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($devices as $device)
+                <tr>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->device_name }}</td>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->type->name }}</td>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->serial_number }}</td>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->created_at->format('Y-m-d H:i:s') }}</td>
+                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $device->updated_at->format('Y-m-d H:i:s') }}</td>
+                    <!-- link to the device page -->
+                    <td class="py-2 px-4">
+                        <a href="{{ route('devices.show', $device->id) }}" class="text-blue-500 hover:text-blue-700">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @endif
+    </div>
+</div>
 @endsection

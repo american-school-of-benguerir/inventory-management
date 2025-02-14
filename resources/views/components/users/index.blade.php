@@ -16,7 +16,7 @@
                     <label for="search" class="text-sm font-medium text-gray-700 dark:text-gray-300">Search by name or email:</label>
                     <input type="text" name="search" value="{{ old('search', $query) }}" placeholder="Search" class="px-3 py-2 rounded-md bg-gray-50 dark:bg-gray-700">
                 </div>
-                <button type="submit" class="px-4 py-2 rounded bg-[#6ca296] dark:bg-[#8576ff] text-white  hover:bg-[#4b776d] dark:hover:bg-[#423B7F]"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button type="submit" class="px-4 py-2 rounded bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F]"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
         </div>
         @if ($users->isEmpty())
@@ -71,6 +71,7 @@
 </div>
 
 <!-- Modal for adding new User -->
+<div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[1001]"></div>
 <div id="addEntryModal" class="fixed inset-0 flex items-center justify-center hidden z-[1002]">
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-[90%] max-w-md">
         <div class="flex justify-between items-center mb-4">
@@ -86,6 +87,15 @@
             <div class="mb-4">
                 <label for="email" class="text-sm font-medium text-gray-700 dark:text-gray-300">Email:</label>
                 <input type="email" name="email" id="email" class="px-3 py-2 rounded-md bg-gray-50 dark:bg-gray-700 w-full" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="text-sm font-medium text-gray-700 dark:text-gray-300">Password:</label>
+                <input type="password" name="password" id="password" class="px-3 py-2 rounded-md bg-gray-50 dark:bg-gray-700 w-full" required>
+            </div>
+            <!-- confirm password -->
+            <div class="mb-4">
+                <label for="password_confirmation" class="text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password:</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" class="px-3 py-2 rounded-md bg-gray-50 dark:bg-gray-700 w-full" required>
             </div>
             <div class="mb-4">
                 <label for="role" class="text-sm font-medium text-gray-700 dark:text-gray-300">Role:</label>
@@ -139,9 +149,9 @@
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!',
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + entryId).submit();
@@ -150,5 +160,4 @@
         });
     });
 </script>
-
 @endsection
