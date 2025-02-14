@@ -5,6 +5,7 @@ use App\Models\Device;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\Credential;
+use App\Models\Note;
 use Illuminate\Http\Request;
 
 class DeviceController extends Controller
@@ -56,8 +57,9 @@ class DeviceController extends Controller
         $device = Device::findOrFail($id);
         $users = User::all();
         $types = Type::all();
+        $notes = Note::where('device_id', $id)->get();
         $credentials = Credential::all(); // Fetch all credentials
-        return view('components.devices.show', compact('device', 'users', 'types', 'credentials'));
+        return view('components.devices.show', compact('device', 'users', 'types', 'credentials', 'notes'));
     }
     // Update the specified device in storage
     public function update(Request $request, $id)

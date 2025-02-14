@@ -103,16 +103,6 @@
         </div>
     </div>
 </div>
-<div class="card bg-[#ebe7e4] dark:bg-[#262F3F] shadow-lg rounded-lg">
-    <div class="card-body p-6">
-        <div class="flex justify-between items-center mb-6">
-            <h6 class="text-lg font-semibold mb-6">Device's notes</h6>
-            <button id="openModalButton" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
-                <i class="fas fa-plus"></i> Add New Note
-            </button>
-        </div>
-    </div>
-</div>
 
 <div class="card bg-[#ebe7e4] dark:bg-[#262F3F] shadow-lg rounded-lg">
     <div class="card-body p-6">
@@ -155,7 +145,29 @@
         @endif
     </div>
 </div>
-
+<div class="card bg-[#ebe7e4] dark:bg-[#262F3F] shadow-lg rounded-lg">
+    <div class="card-body p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h6 class="text-lg font-semibold mb-6">Device's notes</h6>
+            <button id="openModalButton" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
+                <i class="fas fa-plus"></i> Add New Note
+            </button>
+        </div>
+        @if ($notes->isEmpty())
+            <p class="text-sm text-gray-600 dark:text-gray-300">No notes linked to this device.</p>
+        @else
+        @foreach ($notes as $note)
+            <div class="card bg-[#FCF8F3] dark:bg-gray-700 shadow-sm h-36 m-5">
+                <div class="card-body p-4 flex flex-col justify-between">
+                    <h6 class="text-lg font-semibold text-gray-800 dark:text-gray-300">{{ $note->created_at }}</h6>
+                    <p class="text-sm text-gray-700 dark:text-gray-400 truncate">{{ $note->note}}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-300 mt-2">{{ $note->user->name }}</p>
+                </div>
+            </div>
+        @endforeach
+        @endif
+    </div>
+</div>
 
 <!-- Modal Overlay -->
 <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-[1001]"></div>
@@ -168,8 +180,9 @@
             <button id="closeModalButton" class="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100">&times;</button>
         </div>
         <!-- add a new note form -->
-        <form action="" method="POST">
+        <form action="{{ route('notes.store') }}" method="POST">
             @csrf
+            <input type="text" name="device_id" value="{{ $device->id }}" hidden>
             <div class="mb-4">
                 <label for="note" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Note</label>
                 <textarea name="note" id="note" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-600 focus:border-[#6ca296] dark:focus:border-[#8576ff] focus:ring focus:ring-[#6ca296] dark:focus:ring-[#8576ff] rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-300"></textarea>

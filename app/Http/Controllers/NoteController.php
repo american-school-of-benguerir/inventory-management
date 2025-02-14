@@ -11,11 +11,11 @@ class NoteController extends Controller
     // Show all notes
     public function index()
     {
-        $notes = Note::with(['device', 'user'])->get();
+        $notes = Note::with(['device'])->get();
         return view('notes.index', compact('notes'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $devices = Device::all();
         return view('notes.create', compact('devices'));
@@ -34,7 +34,8 @@ class NoteController extends Controller
             'created_by' => auth()->id(),
         ]);
 
-        return redirect()->route('notes.index')->with('success', 'Note created successfully!');
+        // return to the device show page
+        return redirect()->route('devices.show', $request->device_id)->with('success', 'Note added successfully!');
     }
 
     public function edit($id)
