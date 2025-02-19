@@ -54,6 +54,15 @@
                         <label for="disk_spaces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Disk Spaces</label>
                         <input type="text" id="disk_spaces" name="disk_spaces" value="{{ old('disk_spaces', $device->disk_spaces) }}" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
                     </div>
+                    <!-- is device defactive -->
+                    <div class="mb-4">
+                        <label for="is_defective" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Defective</label>
+                        <select name="is_defective" id="is_defective" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="0" {{ $device->is_defective == 0 ? 'selected' : '' }}>No</option>
+                            <option value="1" {{ $device->is_defective == 1 ? 'selected' : '' }}>Yes</option>
+                        </select>
+                    </div>
+
                 </div>
 
                 <!-- Second Column: Fields 8 to 14 -->
@@ -66,8 +75,13 @@
 
                     <!-- Model Field -->
                     <div class="mb-4">
-                        <label for="model" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model</label>
-                        <input type="text" id="model" name="model" value="{{ old('model', $device->model) }}" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
+                        <label for="model" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model name</label>
+                        <input type="text" id="model" name="model_name" value="{{ old('model_name', $device->model_name) }}" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="model" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Model number</label>
+                        <input type="text" id="model" name="model_number" value="{{ old('model_number', $device->model_number) }}" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
                     </div>
 
                     <!-- Make Field -->

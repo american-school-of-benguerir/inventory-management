@@ -5,6 +5,8 @@ use App\Models\Device;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\Credential;
+use App\Models\DeviceAccessory;
+use App\Models\Accessory;
 use App\Models\Note;
 use Illuminate\Http\Request;
 
@@ -33,17 +35,20 @@ class DeviceController extends Controller
         $query = $request->input('search');
 
         $devices = Device::with(['type', 'assignee', 'lastUpdatedBy'])
-                        ->where('device_name', 'like', '%' . $query . '%')  // Search by device name
-                        ->orWhere('serial_number', 'like', '%' . $query . '%')  // Search by serial number
-                        ->orWhere('mac_address', 'like', '%' . $query . '%')  // Search by mac address
-                        ->whereNull('assignee_id')  // Get only unassigned devices
-                        ->latest()
-                        ->paginate(10);
+        ->where(function ($subQuery) use ($query) {
+            // Group the search conditions together
+            $subQuery->where('device_name', 'like', '%' . $query . '%')
+                    ->orWhere('serial_number', 'like', '%' . $query . '%')
+                    ->orWhere('mac_address', 'like', '%' . $query . '%');
+        })
+        ->whereNull('assignee_id')  // Apply this condition after the search conditions
+        ->latest()
+        ->paginate(10);
+
 
         return view('components.devices.unassigned', compact('devices', 'query'));
     }
 
-    // Show the form for editing the specified device
     public function edit($id)
     {
         $device = Device::findOrFail($id);
@@ -57,9 +62,11 @@ class DeviceController extends Controller
         $device = Device::findOrFail($id);
         $users = User::all();
         $types = Type::all();
+        $Accessories = Accessory::all();
+        $DeviceAccessories = DeviceAccessory::where('device_id', $id)->get();
         $notes = Note::where('device_id', $id)->get();
         $credentials = Credential::all(); // Fetch all credentials
-        return view('components.devices.show', compact('device', 'users', 'types', 'credentials', 'notes'));
+        return view('components.devices.show', compact('device', 'users', 'types', 'credentials', 'notes', 'DeviceAccessories', 'Accessories'));
     }
     // Update the specified device in storage
     public function update(Request $request, $id)
@@ -67,6 +74,7 @@ class DeviceController extends Controller
         $request->validate([
             'type_id' => 'required|exists:types,id',
             'serial_number' => 'required|unique:devices,serial_number,' . $id,
+            'is_defective' => 'nullable|boolean',
             // Add validation for other fields as needed
         ]);
         // if assignee_id is 0 set it to null
@@ -75,7 +83,9 @@ class DeviceController extends Controller
         }
         $device = Device::findOrFail($id);
         // get the curent user and add it to the request in the last_updated_by field
-        $request->merge(['last_updated_by' => auth()->id()]);
+        $request->merge([
+            'last_updated_by' => auth()->id(),
+        ]);
         $device->update($request->all());
 
         return redirect()->route('devices.index')->with('success', 'Device updated successfully!');

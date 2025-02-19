@@ -67,7 +67,7 @@ class NoteController extends Controller
     {
         $note = Note::findOrFail($id);
         $note->delete();
-
-        return redirect()->route('notes.index')->with('success', 'Note deleted successfully!');
+        // redirect to the show device with id page with a success message
+        return redirect()->route('devices.show', $note->device_id)->with('success', 'Note deleted successfully!');
     }
 }

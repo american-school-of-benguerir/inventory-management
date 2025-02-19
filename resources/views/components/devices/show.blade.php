@@ -49,7 +49,7 @@
                 <!-- is device diffective -->
                 <div class="mb-6  border-gray-300 dark:border-gray-600 pb-4">
                     <label for="disk_spaces" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Device Diffective</label>
-                    <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->is_diffective ? 'Yes' : 'No' }}</p>
+                    <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">{{ $device->is_defective == 0 ? 'No' : 'Yes' }}</p>
                 </div>
             </div>
 
@@ -145,6 +145,18 @@
         @endif
     </div>
 </div>
+
+<div class="card bg-[#ebe7e4] dark:bg-[#262F3F] shadow-lg rounded-lg">
+    <div class="card-body p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h6 class="text-lg font-semibold mb-6">Device's Accessories</h6>
+            <button id="openModalButton" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
+                <i class="fas fa-plus"></i> Add New Accessory
+            </button>
+        </div>
+    </div>
+</div>
+
 <div class="card bg-[#ebe7e4] dark:bg-[#262F3F] shadow-lg rounded-lg">
     <div class="card-body p-6">
         <div class="flex justify-between items-center mb-6">
@@ -163,6 +175,15 @@
                     <p class="text-sm text-gray-700 dark:text-gray-400 truncate">{{ $note->note}}</p>
                     <p class="text-xs text-gray-500 dark:text-gray-300 mt-2">{{ $note->user->name }}</p>
                 </div>
+                <!-- delete button -->
+                <button class="delete-button text-red-500 hover:text-red-700 ml-4" data-id="{{ $note->id }}">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <!-- delete button -->
+                <form id="delete-form-{{ $note->id }}" action="{{ route('notes.destroy', $note->id) }}" method="POST" style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
             </div>
         @endforeach
         @endif

@@ -16,9 +16,11 @@ Route::middleware('guest')->group(function () {
 
     // Register
     Route::get('register', function () {
-        return view('components.auth.register');
+        return view('components.auth.login');
     })->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    Route::post('register', function () {
+        return view('components.auth.login');
+    })->name('register');
 
     // Login
     Route::get('login', function () {

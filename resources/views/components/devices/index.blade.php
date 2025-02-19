@@ -132,8 +132,12 @@
                     </div>
                     <!-- is device diffective Field -->
                     <div class="mb-4">
-                        <label for="is_diffective" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Diffective</label>
-                        <input type="checkbox" id="is_diffective" name="is_diffective" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" >
+                        <label for="is_defective" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Diffective</label>
+                        <select name="is_defective" id="is_defective" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="" selected disabled>Select choice</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
                     </div>
                 </div>
 
