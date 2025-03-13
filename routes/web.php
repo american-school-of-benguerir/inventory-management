@@ -10,6 +10,7 @@ use App\Http\Controllers\NoteController;
 use App\Http\Controllers\AccessoryController;
 use App\Http\Controllers\CredentialController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DeviceAccessoryController;
 
 Route::get('/', function () {
     return view('components.home');
@@ -84,5 +85,16 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'users.destroy',
     ]);
     Route::post('/device/{id}/link-credential', [DeviceController::class, 'linkCredentialToDevice'])->name('device.linkCredential');
+    // routes resource for device accessories
+    Route::resource('device-accessories', DeviceAccessoryController::class)->names([
+        'index'   => 'device-accessories.index',
+        'create'  => 'device-accessories.create',
+        'store'   => 'device-accessories.store',
+        'show'    => 'device-accessories.show',
+        'edit'    => 'device-accessories.edit',
+        'update'  => 'device-accessories.update',
+        'destroy' => 'device-accessories.destroy',
+    ]);
+
 });
 require __DIR__.'/auth.php';

@@ -36,4 +36,10 @@ class Device extends Model
     {
         return $this->belongsToMany(Credential::class, 'device_credential', 'device_id', 'credential_id');
     }
+    public function accessories()
+    {
+        return $this->belongsToMany(Accessory::class, 'device_accessories')
+                    ->withPivot('quantity')
+                    ->withTimestamps();
+    }
 }

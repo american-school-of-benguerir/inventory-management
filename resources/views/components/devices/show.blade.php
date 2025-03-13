@@ -109,7 +109,7 @@
         <div class="flex justify-between items-center mb-6">
             <h6 class="text-lg font-semibold mb-6">Device's credeantials</h6>
             <button id="openModalButtonc" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
-                <i class="fas fa-plus"></i> Add credeantials
+                <i class="fas fa-plus"></i> Add New Accessory
             </button>
         </div>
         @if ($device->credentials->isEmpty())
@@ -150,10 +150,43 @@
     <div class="card-body p-6">
         <div class="flex justify-between items-center mb-6">
             <h6 class="text-lg font-semibold mb-6">Device's Accessories</h6>
-            <button id="openModalButton" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
+            <button id="openaccmodel" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">
                 <i class="fas fa-plus"></i> Add New Accessory
             </button>
         </div>
+        @if ($DeviceAccessories->isEmpty())
+            <p class="text-sm text-gray-600 dark:text-gray-300">No credentials linked to this device.</p>
+        @else
+            <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
+                <thead class="bg-[#e4ebeb] dark:bg-gray-700 rounded">
+                    <tr>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Email</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Type</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Quantity</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($DeviceAccessories as $deviceAccessory)
+                        <tr>
+                            <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $deviceAccessory->accessory->name }}</td>
+                            <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $deviceAccessory->accessory->type }}</td>
+                            <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $deviceAccessory->quantity }}</td>
+                            <td class="py-2 px-4">
+                                <form action="{{ route('device-accessories.destroy', ['device_id' => $deviceAccessory->device_id , 'accessory_id' => $deviceAccessory->id]) }}" method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-700">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
+        </ul>
     </div>
 </div>
 
@@ -226,6 +259,7 @@
             <div class="mb-4">
                 <label for="credential" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Credential</label>
                 <select name="credential_id" id="credential" class="mt-1 block w-full border-gray-300 dark:border-gray-600 focus:border-[#6ca296] dark:focus:border-[#8576ff] focus:ring focus:ring-[#6ca296] dark:focus:ring-[#8576ff] rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-300">
+                    <option value="" selected disabled>Select Credential</option>
                     @foreach ($credentials as $credential)
                         <option value="{{ $credential->id }}">{{ $credential->email }} - {{ $credential->type }}</option>
                     @endforeach
@@ -238,12 +272,42 @@
         </form>
     </div>
 </div>
+<div id="addAccessoryModal" class="fixed inset-0 flex items-center justify-center hidden z-[1002]">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">Add New Accessory</h3>
+            <button id="closeModalButtonacc" class="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100">&times;</button>
+        </div>
+        <form action="{{ route('device-accessories.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="device_id" value="{{ $device->id }}">
+            <div class="mb-4">
+                <label for="accessory_id" class="block text-sm font-medium">Select Accessory</label>
+                <select name="accessory_id" id="accessory_id" class="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700">
+                    <option value="" selected disabled>Select Accessory</option>
+                    @foreach($Accessories as $accessory)
+                        <option value="{{ $accessory->id }}">{{ $accessory->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
+            <div class="mb-4">
+                <label for="quantity" class="block text-sm font-medium">Quantity</label>
+                <input type="number" name="quantity" id="quantity" class="w-full p-2 border rounded bg-gray-100 dark:bg-gray-700">
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F] px-4 py-2 rounded">Add Accessory</button>
+            </div>
+        </form>
+    </div>
+</div>
 <script>
 // Open modal
     document.getElementById('openModalButtonc').addEventListener('click', function() {
         document.getElementById('modalOverlay').classList.remove('hidden');
         document.getElementById('credmodal').classList.remove('hidden');
+        console.log('clicked cred');
     });
 
     // Close modal
@@ -272,6 +336,22 @@
     document.getElementById('modalOverlay').addEventListener('click', function() {
         document.getElementById('modalOverlay').classList.add('hidden');
         document.getElementById('addEntryModal').classList.add('hidden');
+    });
+</script>
+<script>
+    document.getElementById('openaccmodel').addEventListener('click', function() {
+        document.getElementById('modalOverlay').classList.remove('hidden');
+        document.getElementById('addAccessoryModal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeModalButtonacc').addEventListener('click', function() {
+        document.getElementById('modalOverlay').classList.add('hidden');
+        document.getElementById('addAccessoryModal').classList.add('hidden');
+    });
+
+    document.getElementById('modalOverlay').addEventListener('click', function() {
+        document.getElementById('modalOverlay').classList.add('hidden');
+        document.getElementById('addAccessoryModal').classList.add('hidden');
     });
 </script>
 

@@ -24,4 +24,10 @@ class Accessory extends Model
     protected $casts = [
         'quantity' => 'integer', // Ensure quantity is cast to integer
     ];
+    public function devices()
+    {
+        return $this->belongsToMany(Device::class, 'device_accessories')
+                    ->withPivot('quantity')
+                    ->withTimestamps();
+    }
 }
