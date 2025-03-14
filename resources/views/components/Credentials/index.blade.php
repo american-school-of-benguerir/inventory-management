@@ -30,9 +30,9 @@
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->email }}</td>
                     <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">
                         <div class="relative">
-                            <input type="password" id="password-field" value="{{ $credential->password }}" class="block  bg-transparent text-sm text-gray-700 dark:text-gray-300 rounded-md px-3 py-2" readonly>
-                            <button type="button" class="absolute right-2 top-2 text-gray-500 dark:text-gray-300" id="toggle-password">
-                              <i class="fas fa-eye"></i>
+                            <input type="password" class="password-field block bg-transparent text-sm text-gray-700 dark:text-gray-300 rounded-md px-3 py-2" value="{{ $credential->password }}" readonly>
+                            <button type="button" class="absolute right-2 top-2 text-gray-500 dark:text-gray-300 toggle-password">
+                                <i class="fas fa-eye"></i>
                             </button>
                           </div>
                       </td> <!-- This will show the decrypted password -->
@@ -131,24 +131,21 @@
   </script>
 <!-- SweetAlert2 for Delete Confirmation -->
 <script>
-    document.querySelectorAll('.delete-button').forEach(function(button) {
-        button.addEventListener('click', function() {
-            const entryId = this.getAttribute('data-id');
+document.querySelectorAll('.toggle-password').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const passwordField = this.closest('td').querySelector('.password-field');
+        const icon = this.querySelector('i');
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + entryId).submit();
-                }
-            });
-        });
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
     });
+});
 </script>
 @endsection
