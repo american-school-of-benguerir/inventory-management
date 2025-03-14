@@ -85,7 +85,9 @@ Route::middleware('auth')->group(function () {
         'destroy' => 'users.destroy',
     ]);
     Route::post('/device/{id}/link-credential', [DeviceController::class, 'linkCredentialToDevice'])->name('device.linkCredential');
+    Route::post('/device/{id}/unlink-credential', [DeviceController::class, 'unlinkCredentialFromDevice'])->name('device.unlinkCredential');
     // routes resource for device accessories
+    Route::delete('device-accessories/{device_id}/{accessory_id}', [DeviceAccessoryController::class, 'destroy'])->name('device-accessories.destroy');
     Route::resource('device-accessories', DeviceAccessoryController::class)->names([
         'index'   => 'device-accessories.index',
         'create'  => 'device-accessories.create',
@@ -93,8 +95,8 @@ Route::middleware('auth')->group(function () {
         'show'    => 'device-accessories.show',
         'edit'    => 'device-accessories.edit',
         'update'  => 'device-accessories.update',
-        'destroy' => 'device-accessories.destroy',
     ]);
+
 
 });
 require __DIR__.'/auth.php';

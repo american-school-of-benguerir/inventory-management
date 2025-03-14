@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Device;
 use App\Models\Accessory;
+use App\Models\DeviceAccessory;
 
 class DeviceAccessoryController extends Controller
 {
@@ -60,11 +61,11 @@ class DeviceAccessoryController extends Controller
         return redirect()->route('device-accessories.index')->with('success', 'Accessory quantity updated successfully!');
     }
 
-    public function destroy($device_id, $accessory_id)
+    public function destroy(DeviceAccessory $deviceAccessory)
     {
-        $device = Device::findOrFail($device_id);
-        $device->accessories()->detach($accessory_id);
+        $device_id = $deviceAccessory->device_id;
+        $deviceAccessory->delete();
 
-        return redirect()->route('devices.show', $device_id)->with('Accessory unlinked from device successfully!');
+        return redirect()->route('devices.show', $device_id)->with('success', 'Accessory unlinked from device successfully!');
     }
 }

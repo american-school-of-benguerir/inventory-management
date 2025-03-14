@@ -144,5 +144,23 @@ class DeviceController extends Controller
 
         return redirect()->route('device.show', $deviceId)->with('error', 'Failed to link credential.');
     }
+    // unlink credential from device
+    public function unlinkCredentialFromDevice(Request $request, $deviceId)
+    {
+        $device = Device::find($deviceId);
+        $credential = Credential::find($request->credential_id);
+
+        if ($device && $credential) {
+            // Assuming you have a many-to-many or one-to-many relationship
+            $device->credentials()->detach($credential); // For many-to-many relation
+            // Or, if it's one-to-many, you can just dissociate:
+            // $device->credential_id = null;
+            // $device->save();
+
+            return redirect()->route('devices.show', $deviceId)->with('success', 'Credential unlinked from device successfully!');
+        }
+
+        return redirect()->route('devices.show', $deviceId)->with('error', 'Failed to unlink credential.');
+    }
 
 }
