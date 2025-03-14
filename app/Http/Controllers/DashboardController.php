@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Device;
 use App\Models\User;
 use App\Models\Type;
+use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
@@ -18,6 +20,12 @@ class DashboardController extends Controller
         $types = Type::all()->count();
         // get count of unassigned devices
         $unassigned = Device::where('assignee_id', null)->count();
-        return view('components.dashboard.index' , compact('user', 'devices', 'types', 'users', 'unassigned'));
+        // getting all types and how many devices linked to each type
+        $typesWithCount = DB::table('types')
+        ->leftJoin('devices', 'types.id', '=', 'devices.type_id')
+        ->select('types.id', 'types.name', DB::raw('COUNT(devices.id) as device_count'))
+        ->groupBy('types.id', 'types.name')
+        ->get();
+        return view('components.dashboard.index' , compact('user', 'devices', 'types', 'users', 'unassigned', 'typesWithCount'));
     }
 }

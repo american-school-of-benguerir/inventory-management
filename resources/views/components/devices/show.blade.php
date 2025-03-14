@@ -173,7 +173,7 @@
                             <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $deviceAccessory->accessory->type }}</td>
                             <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $deviceAccessory->quantity }}</td>
                             <td class="py-2 px-4">
-                                <form action="{{ route('device-accessories.destroy', $deviceAccessory->id) }}" method="POST" style="display: inline-block;">
+                                <form id="delete-form-{{ $deviceAccessory->id }}" action="{{ route('device-accessories.destroy', $deviceAccessory->id) }}" method="POST" style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-500 hover:text-red-700">
