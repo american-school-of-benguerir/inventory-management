@@ -90,11 +90,11 @@
                     <option value="icloud">iCloud</option>
                     <option value="google">Google</option>
                     <option value="microsoft">Microsoft</option>
-                    <option value="aws">AWS</option>
                     <option value="database">Database</option>
                     <option value="api">API</option>
                     <option value="vpn">VPN</option>
-                    <option value="local acount">Email</option>
+                    <option value="local acount">Local acount</option>
+                    <option value="admin acount">Admin acount</option>
                     <option value="other">Other</option>
                 </select>
             </div>
