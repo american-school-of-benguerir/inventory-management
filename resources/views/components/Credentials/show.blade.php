@@ -12,7 +12,7 @@
     <div class="m-5">
         <div class="mb-6 border-b border-gray-300 dark:border-gray-600 pb-4">
             <label class="text-gray-600 dark:text-gray-400">username</label>
-            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">{{ $credential->email }}</p>
+            <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">{{ $credential->username }}</p>
         </div>
         <div class="mb-6 border-b border-gray-300 dark:border-gray-600 pb-4">
             <label class="text-gray-600 dark:text-gray-400">Type</label>

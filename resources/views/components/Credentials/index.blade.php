@@ -18,7 +18,7 @@
         <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
             <thead class="bg-[#e4ebeb] dark:bg-gray-700 rounded">
                 <tr>
-                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Email</th>
+                    <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Username</th>
                     <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Password</th>
                     <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Type</th>
                     <th class="py-2 px-4 text-left text-sm font-medium text-gray-500 dark:text-gray-200">Actions</th>
@@ -27,34 +27,33 @@
             <tbody>
                 @foreach($credentials as $credential)
                     <tr>
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->email }}</td>
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">
-                        <div class="relative">
-                            <input type="password" class="password-field block bg-transparent text-sm text-gray-700 dark:text-gray-300 rounded-md px-3 py-2" value="{{ $credential->password }}" readonly>
-                            <button type="button" class="absolute right-2 top-2 text-gray-500 dark:text-gray-300 toggle-password">
-                                <i class="fas fa-eye"></i>
+                        <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->username }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">
+                            <div class="relative">
+                                <input type="password" class="password-field block bg-transparent text-sm text-gray-700 dark:text-gray-300 rounded-md px-3 py-2" value="{{ $credential->password }}" readonly>
+                                <button type="button" class="absolute right-2 top-2 text-gray-500 dark:text-gray-300 toggle-password">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->type }}</td>
+                        <td class="py-2 px-4">
+                            <a href="{{ route('credentials.show', $credential->id) }}" class="text-blue-500 hover:text-blue-700">
+                                <i class="fa-solid fa-up-right-from-square"></i>
+                            </a>
+                            <a href="{{ route('credentials.edit', $credential->id) }}" class="text-green-500 hover:text-green-700 ml-4">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button class="delete-button text-red-500 hover:text-red-700 ml-4" data-id="{{ $credential->id }}">
+                                <i class="fas fa-trash"></i>
                             </button>
-                          </div>
-                      </td> <!-- This will show the decrypted password -->
-                    <td class="py-2 px-4 text-sm text-gray-700 dark:text-gray-300">{{ $credential->type }}</td>
-                    <td class="py-2 px-4">
-                        <a href="{{ route('credentials.show', $credential->id) }}" class="text-blue-500 hover:text-blue-700">
-                            <i class="fa-solid fa-up-right-from-square"></i>
-                        </a>
-                        <a href="{{ route('credentials.edit', $credential->id) }}" class="text-green-500 hover:text-green-700 ml-4">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="delete-button text-red-500 hover:text-red-700 ml-4" data-id="{{ $credential->id }}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <form id="delete-form-{{ $credential->id }}" action="{{ route('credentials.destroy', $credential->id) }}" method="POST" class="hidden">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </td>
-                </tr>
+                            <form id="delete-form-{{ $credential->id }}" action="{{ route('credentials.destroy', $credential->id) }}" method="POST" class="hidden">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </td>
+                    </tr>
                 @endforeach
-
             </tbody>
         </table>
         @endif
@@ -74,8 +73,8 @@
         <form action="{{ route('credentials.store') }}" method="POST">
             @csrf
             <div class="mb-4">
-                <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Email</label>
-                <input type="email" name="email" id="email" class="w-full p-2 mt-2 bg-[#ebe7e4] dark:bg-gray-700 rounded" required>
+                <label for="username" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Username</label>
+                <input type="text" name="username" id="username" class="w-full p-2 mt-2 bg-[#ebe7e4] dark:bg-gray-700 rounded" required>
             </div>
 
             <div class="mb-4">
@@ -85,7 +84,19 @@
 
             <div class="mb-4">
                 <label for="type" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">Type</label>
-                <input type="text" name="type" id="type" class="w-full p-2 mt-2 bg-[#ebe7e4] dark:bg-gray-700 rounded" required>
+                <select name="type" id="type" class="w-full p-2 mt-2 bg-[#ebe7e4] dark:bg-gray-700 rounded" required>
+                    <option value="">Select Type</option>
+                    <option value="ssh">SSH</option>
+                    <option value="icloud">iCloud</option>
+                    <option value="google">Google</option>
+                    <option value="microsoft">Microsoft</option>
+                    <option value="aws">AWS</option>
+                    <option value="database">Database</option>
+                    <option value="api">API</option>
+                    <option value="vpn">VPN</option>
+                    <option value="local acount">Email</option>
+                    <option value="other">Other</option>
+                </select>
             </div>
 
             <!-- Submit Button -->
@@ -113,22 +124,7 @@
         document.getElementById('addEntryModal').classList.add('hidden');
     });
 </script>
-<script>
-    document.getElementById('toggle-password').addEventListener('click', function() {
-      const passwordField = document.getElementById('password-field');
-      const icon = this.querySelector('i');
 
-      if (passwordField.type === 'password') {
-        passwordField.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        passwordField.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    });
-  </script>
 <!-- SweetAlert2 for Delete Confirmation -->
 <script>
 document.querySelectorAll('.toggle-password').forEach(function(button) {

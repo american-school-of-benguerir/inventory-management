@@ -12,7 +12,7 @@ class Credential extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['email', 'password', 'type'];
+    protected $fillable = ['username', 'password', 'type'];
 
     // Encrypt the password before saving it
     public function setPasswordAttribute($value)

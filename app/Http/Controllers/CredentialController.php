@@ -27,21 +27,22 @@ class CredentialController extends Controller
     }
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'email' => 'required|email|unique:credentials,email',
-        //     'password' => 'required|min:8',
-        //     'type' => 'required|string',
-        // ]);
-
-        // Create the credential with encrypted password
-        Credential::create([
-            'email' => $request->email,
-            'password' => $request->password,  // Do not encrypt here
-            'type' => $request->type,
-            'active' => true,
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+            'type' => 'required|string',
         ]);
 
-        return redirect()->route('credentials.index')->with('success', 'Credential added successfully!');
+        $credential = new Credential([
+            'username' => $request->username,
+            'password' => $request->password,
+            'type' => $request->type,
+        ]);
+
+        $credential->save();
+
+        return redirect()->route('credentials.index')
+            ->with('success', 'Credential created successfully.');
     }
 
     public function edit(Credential $credential)
@@ -52,18 +53,19 @@ class CredentialController extends Controller
     public function update(Request $request, Credential $credential)
     {
         $request->validate([
-            'email' => 'required|email|unique:credentials,email,' . $credential->id,
-            'password' => 'required|min:8',
+            'username' => 'required|string',
+            'password' => 'required|string',
             'type' => 'required|string',
         ]);
 
         $credential->update([
-            'email' => $request->email,
-            'password' => Crypt::encryptString($request->password),  // Encrypt before saving
+            'username' => $request->username,
+            'password' => $request->password,
             'type' => $request->type,
         ]);
 
-        return redirect()->route('credentials.index')->with('success', 'Credential updated successfully!');
+        return redirect()->route('credentials.index')
+            ->with('success', 'Credential updated successfully.');
     }
 
     public function destroy(Credential $credential)
