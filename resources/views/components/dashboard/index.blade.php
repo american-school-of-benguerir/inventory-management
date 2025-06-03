@@ -43,36 +43,12 @@
 </div>
 
 <div class="card bg-[#ebe7e4] dark:bg-[#262F3F] mt-4">
-    <div class="card-body">
-        <h6 class="text-lg font-semibold mb-6">Types of Devices Count</h6>
-        <div class="grid grid-cols-2 gap-4">
-            @foreach ($typesWithCount as $type)
-                <div class="card bg-[#FCF8F3] dark:bg-gray-700 shadow-sm">
-                    <div class="card-body">
-                        <h6 class="text-lg font-semibold">{{ $type["name"] }}</h6>
-                        <p class="text-3xl font-bold">{{ $type["device_count"] }}</p>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</div>
-
-<div class="card bg-[#ebe7e4] dark:bg-[#262F3F] mt-4 pb-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+    <div class="grid grid-cols-2 gap-4 mt-4">
         <!-- Device Assignment Chart -->
         <div class="card bg-[#ebe7e4] dark:bg-[#262F3F]">
             <div class="card-body" style="height: 400px;">
                 <h6 class="text-lg font-semibold mb-6">Device Assignment Status</h6>
                 <canvas id="assignmentChart" class="w-full"></canvas>
-            </div>
-        </div>
-
-        <!-- Device Types Distribution Chart -->
-        <div class="card bg-[#ebe7e4] dark:bg-[#262F3F]">
-            <div class="card-body" style="height: 400px;">
-                <h6 class="text-lg font-semibold mb-6">Device Types Distribution</h6>
-                <canvas id="typesChart" class="w-full"></canvas>
             </div>
         </div>
 
@@ -83,6 +59,18 @@
                 <canvas id="deviceStatusChart" class="w-full"></canvas>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Device Types Distribution Chart in Separate Card -->
+<div class="card bg-[#ebe7e4] dark:bg-[#262F3F] mt-4">
+    <div class="card-body">
+        <a href="{{ route('devices.index') }}" class="block">
+            <h6 class="text-lg font-semibold mb-6">Device Types Distribution</h6>
+            <div style="height: 400px;">
+                <canvas id="typesChart" class="w-full"></canvas>
+            </div>
+        </a>
     </div>
 </div>
 
@@ -170,6 +158,16 @@
                                 color: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
                             }
                         }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const index = elements[0].index;
+                            const typeName = labels[index];
+                            window.location.href = `{{ route('devices.index') }}?search=${encodeURIComponent(typeName)}`;
+                        }
+                    },
+                    onHover: (event, elements) => {
+                        event.native.target.style.cursor = elements.length ? 'pointer' : 'default';
                     }
                 }
             });

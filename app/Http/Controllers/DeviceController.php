@@ -21,6 +21,9 @@ class DeviceController extends Controller
                          ->where('device_name', 'like', '%' . $query . '%')  // Search by device name
                          ->orWhere('serial_number', 'like', '%' . $query . '%')  // Search by serial number
                          ->orWhere('mac_address', 'like', '%' . $query . '%')  // Search by mac address
+                         ->orWhereHas('type', function($q) use ($query) {
+                            $q->where('name', 'like', '%' . $query . '%');
+                        })
                          ->latest()
                          ->paginate(10);
 
