@@ -110,7 +110,6 @@ class DeviceController extends Controller
         $request->validate([
             'type_id' => 'required|exists:types,id',
             'serial_number' => 'required|unique:devices,serial_number',
-            // Add validation for other fields as needed
         ]);
         // add the last_updated_by field to the request
         $values['last_updated_by'] = auth()->id();

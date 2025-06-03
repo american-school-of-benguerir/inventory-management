@@ -18,21 +18,34 @@ class DashboardController extends Controller
         $devices = Device::count();
         $users = User::count();
         $types = Type::count();
-        // get count of unassigned devices
-        $unassigned = Device::where('assignee_id', null)->count();
-        // Get types with device counts using a direct query
+        $unassigned = Device::whereNull('assignee_id')->count();
+
         $typesWithCount = DB::table('types')
             ->leftJoin('devices', 'types.id', '=', 'devices.type_id')
             ->select('types.name', DB::raw('COUNT(devices.id) as device_count'))
             ->groupBy('types.id', 'types.name')
-            ->get()
-            ->map(function ($type) {
+            ->get()->map(function ($type) {
                 return [
                     'name' => $type->name,
                     'device_count' => $type->device_count
                 ];
-            })
-            ->toArray(); // Convert to plain array
-        return view('components.dashboard.index' , compact('user', 'devices', 'types', 'users', 'unassigned', 'typesWithCount'));
+            })->toArray();
+
+        $topUsers = User::withCount('devices')
+            ->orderByDesc('devices_count')
+            ->take(5)->get();
+
+        $recentDevices = Device::latest()->take(5)->get();
+
+        $deviceStatusCount = Device::selectRaw('is_defective, COUNT(*) as total')
+            ->groupBy('is_defective')
+            ->get()
+            ->mapWithKeys(fn($item) => [
+                $item->is_defective ? 'Defective' : 'Working' => $item->total
+            ]);
+        return view('components.dashboard.index', compact(
+            'user', 'devices', 'users', 'types', 'unassigned',
+            'typesWithCount', 'topUsers', 'recentDevices', 'deviceStatusCount'
+        ));
     }
 }

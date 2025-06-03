@@ -42,4 +42,5 @@ class Device extends Model
                     ->withPivot('quantity')
                     ->withTimestamps();
     }
+    
 }

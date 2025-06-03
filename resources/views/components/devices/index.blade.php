@@ -67,7 +67,8 @@
             </tbody>
         </table>
         <div class="mt-4">
-            {{ $devices->links() }}
+            {{ $devices->appends(['search' => request('search')])->links('vendor.pagination.default') }}
+
         </div>
         @endif
     </div>
@@ -132,7 +133,7 @@
                     </div>
                     <!-- is device diffective Field -->
                     <div class="mb-4">
-                        <label for="is_defective" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Diffective</label>
+                        <label for="is_defective" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Defective</label>
                         <select name="is_defective" id="is_defective" class="mt-1 block w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                             <option value="" selected disabled>Select choice</option>
                             <option value="0">No</option>
