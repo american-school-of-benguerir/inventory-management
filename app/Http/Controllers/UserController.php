@@ -13,12 +13,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = $request->get('search');
-        $users = User::when($query, function ($query) use ($request) {
-                return $query->where('name', 'like', '%'.$request->search.'%')
-                            ->orWhere('email', 'like', '%'.$request->search.'%');
-            })
-            ->paginate(10); // You can adjust the number of users per page as needed
+        $query = $request->input('search');
+
+        $users = User::when($query, function($q) use ($query) {
+            return $q->where('name', 'like', "%{$query}%")
+                    ->orWhere('email', 'like', "%{$query}%");
+        })
+        ->latest()
+        ->paginate(10);
+
         return view('components.users.index', compact('users', 'query'));
     }
 

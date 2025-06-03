@@ -8,10 +8,18 @@ use Illuminate\Support\Facades\Crypt;
 
 class CredentialController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $credentials = Credential::all();
-        return view('components.credentials.index', compact('credentials'));
+        $query = $request->input('search');
+
+        $credentials = Credential::when($query, function($q) use ($query) {
+            return $q->where('username', 'like', "%{$query}%")
+                    ->orWhere('type', 'like', "%{$query}%");
+        })
+        ->latest()
+        ->paginate(10);
+
+        return view('components.credentials.index', compact('credentials', 'query'));
     }
 
     public function create()

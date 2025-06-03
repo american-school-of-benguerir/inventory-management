@@ -11,8 +11,21 @@
             </button>
         </div>
 
+        <!-- Search Form -->
+        <div class="flex justify-between items-center mb-6">
+            <form method="GET" action="{{ route('credentials.index') }}" class="flex items-center">
+                <div class="mr-2">
+                    <label for="search" class="text-sm font-medium text-gray-700 dark:text-gray-300">Search by username or type:</label>
+                    <input type="text" name="search" value="{{ old('search', $query) }}" placeholder="Search" class="px-3 py-2 rounded-md bg-gray-50 dark:bg-gray-700">
+                </div>
+                <button type="submit" class="px-4 py-2 rounded bg-[#6ca296] dark:bg-[#8576ff] text-white hover:bg-[#4b776d] dark:hover:bg-[#423B7F]">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+
         @if ($credentials->isEmpty())
-            <p class="text-sm text-gray-600 dark:text-gray-300">No credentials available.</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">No credentials found.</p>
         @else
         <!-- Credentials Table -->
         <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
@@ -56,6 +69,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="mt-4">
+            {{ $credentials->appends(['search' => request('search')])->links('vendor.pagination.default') }}
+        </div>
         @endif
     </div>
 </div>
@@ -141,6 +157,26 @@ document.querySelectorAll('.toggle-password').forEach(function(button) {
             icon.classList.remove('fa-eye-slash');
             icon.classList.add('fa-eye');
         }
+    });
+});
+
+document.querySelectorAll('.delete-button').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const entryId = this.getAttribute('data-id');
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + entryId).submit();
+            }
+        });
     });
 });
 </script>

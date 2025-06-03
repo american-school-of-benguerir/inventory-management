@@ -103,14 +103,20 @@ class DeviceController extends Controller
 
         // Loop through using the key to modify the original array
         foreach ($values as $key => $value) {
-            if (empty(trim($value))) {
-                $values[$key] = 'N/A';  // Modify the original array using the key
+            if (empty(trim($value)) && $key !== 'is_defective') {  // Exclude is_defective from N/A conversion
+                $values[$key] = 'N/A';
             }
         }
+
         $request->validate([
             'type_id' => 'required|exists:types,id',
             'serial_number' => 'required|unique:devices,serial_number',
+            'is_defective' => 'nullable|boolean',
         ]);
+
+        // Convert is_defective to boolean
+        $values['is_defective'] = $request->boolean('is_defective');
+
         // add the last_updated_by field to the request
         $values['last_updated_by'] = auth()->id();
         $device = Device::create($values);

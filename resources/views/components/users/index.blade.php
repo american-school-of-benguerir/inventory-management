@@ -20,7 +20,7 @@
             </form>
         </div>
         @if ($users->isEmpty())
-            <p class="text-sm text-gray-600 dark:text-gray-300">No users available.</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300">No users found.</p>
         @else
         <!-- Users Table -->
         <table class="min-w-full w-full table-auto bg-[#ebe7e4] dark:bg-gray-800 rounded">
@@ -64,7 +64,7 @@
             </tbody>
         </table>
         <div class="mt-4">
-            {{ $users->links() }}
+            {{ $users->appends(['search' => request('search')])->links('vendor.pagination.default') }}
         </div>
         @endif
     </div>
@@ -149,9 +149,9 @@
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + entryId).submit();
