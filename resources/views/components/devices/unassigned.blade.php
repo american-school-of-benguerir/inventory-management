@@ -67,7 +67,7 @@
             </tbody>
         </table>
         <div class="mt-4">
-            {{ $devices->links() }}
+            {{ $devices->appends(['search' => request('search')])->links('vendor.pagination.default') }}
         </div>
         @endif
     </div>

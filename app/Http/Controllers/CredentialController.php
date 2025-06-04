@@ -19,7 +19,7 @@ class CredentialController extends Controller
         ->latest()
         ->paginate(10);
 
-        return view('components.credentials.index', compact('credentials', 'query'));
+        return view('components.Credentials.index', compact('credentials', 'query'));
     }
 
     public function create()
@@ -31,7 +31,7 @@ class CredentialController extends Controller
     public function show($id)
     {
         $credential = Credential::findOrFail($id);
-        return view('components.credentials.show', compact('credential'));
+        return view('components.Credentials.show', compact('credential'));
     }
     public function store(Request $request)
     {
@@ -55,7 +55,7 @@ class CredentialController extends Controller
 
     public function edit(Credential $credential)
     {
-        return view('components.credentials.edit', compact('credential'));
+        return view('components.Credentials.edit', compact('credential'));
     }
 
     public function update(Request $request, Credential $credential)
